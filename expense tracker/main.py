@@ -1,11 +1,14 @@
 from Expense import Expense
 
 def main():
+
+    all_expenses = "expense tracker/expenses.csv"
     # get user input    
     expense = get_user_input()
     print(expense)
 
     # save into file
+    save_input(expense, all_expenses)
     # read and provide summary
 
 def get_user_input():
@@ -13,11 +16,11 @@ def get_user_input():
     product_price = float(input("Enter product price: "))
 
     product_categories = [
-        "utilities and essentials",
-        "grocery and food",
-        "transportation",
-        "entertainment",
-        "savings and investment"
+        "Utilities & Essentials",
+        "Grocery & Food",
+        "Transportation",
+        "Entertainment",
+        "Savings & Investments"
     ]
 
     while True:
@@ -36,6 +39,10 @@ def get_user_input():
     
     else:
         print("invalid choice")
+
+def save_input(expense: Expense, all_expenses):
+    with open(all_expenses, "a") as f:
+        f.write(f"{expense.name}, {expense.price}, {expense.category}\n")
 
 if __name__ == "__main__":
     main()
