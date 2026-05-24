@@ -4,12 +4,14 @@ def main():
 
     all_expenses = "expense tracker/expenses.csv"
     # get user input    
-    expense = get_user_input()
-    print(expense)
+    # expense = get_user_input()
+    # print(expense)
 
-    # save into file
-    save_input(expense, all_expenses)
+    # # save into file
+    # save_input(expense, all_expenses)
+
     # read and provide summary
+    analyse_expenses(all_expenses)
 
 def get_user_input():
     product_name = input("Enter product name: ")
@@ -43,6 +45,18 @@ def get_user_input():
 def save_input(expense: Expense, all_expenses):
     with open(all_expenses, "a") as f:
         f.write(f"{expense.name}, {expense.price}, {expense.category}\n")
+
+def analyse_expenses(all_expenses):
+    expenses = []
+    with open(all_expenses, "r") as f:
+        lines = f.readlines()
+
+        for line in lines:
+            name, price, category = line.strip().split(",")
+            line_expense = Expense(name = name, price = float(price), category = category)
+            print(line_expense)
+            expenses.append(line_expense)
+    print(expenses)
 
 if __name__ == "__main__":
     main()
