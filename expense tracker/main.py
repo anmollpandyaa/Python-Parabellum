@@ -1,6 +1,18 @@
 import locale
 from Expense import Expense
 from pathlib import Path
+from datetime import datetime
+
+#define a monthly budget
+budget = 20000
+
+# csv file to save expenses
+BASE_DIR = Path(__file__).parent
+all_expenses = BASE_DIR / "expenses.csv"
+
+# track month to reset every month
+month_file = BASE_DIR / "month.txt"
+current_month = datetime.now().strftime("%Y-%m")
 
 # function to take user input
 def get_user_input():
@@ -72,6 +84,27 @@ def analyse_expenses(all_expenses, budget):
     print(green_text(f"Remaining: {format_inr(remaining_budget)}"))
     print("\n")
 
+# track month to reset expenses each month
+def check_month_reset():
+    global expenses_file
+
+    # create month file if missing
+    if not month_file.exists():
+        month_file.write_text(current_month)
+
+    saved_month = month_file.read_text().strip()
+
+    # reset if month changed
+    if saved_month != current_month:
+
+        # clear expenses
+        expenses_file.write_text("")
+
+        # update saved month
+        month_file.write_text(current_month)
+
+        print("New month detected. Expenses reset successfully!")
+
 # format figures to INR format
 locale.setlocale(locale.LC_MONETARY, 'en_IN')
 def format_inr(amount):
@@ -93,12 +126,8 @@ def green_text(text):
 # main function
 def main():
 
-    #define a monthly budget
-    budget = 20000
-
-    # csv file to save expenses
-    BASE_DIR = Path(__file__).parent
-    all_expenses = BASE_DIR / "expenses.csv"
+    # reset expenses automatically each month
+    check_month_reset()
 
     print("\n")
     print("Welcome to your expense manager! please select operation to proceed.")
