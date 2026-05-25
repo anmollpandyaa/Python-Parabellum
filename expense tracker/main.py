@@ -1,32 +1,7 @@
 import locale
 from Expense import Expense
 
-def main():
-
-    #define a monthly budget
-    budget = 20000
-
-    # csv file to save expenses
-    all_expenses = "expense tracker/expenses.csv"
-
-    print("Welcome to your expense manager! please select operation to proceed.")
-    choice = int(input("1. Add expense\n2. Analyse Expenses\n->"))
-
-    match choice:
-        case 1:
-            # take expense data from user
-            expense = get_user_input()
-
-            # display added expense
-            print(f"Expense added-->\n{expense}")
-
-            # save input into a csv file
-            save_input(expense, all_expenses)
-        
-        case 2:
-            # read data and provide brief analysis
-            analyse_expenses(all_expenses, budget)
-
+# function to take user input
 def get_user_input():
     product_name = input("Expense Title: ")
     product_price = float(input("Expense Price: "))
@@ -56,10 +31,12 @@ def get_user_input():
     else:
         print("invalid choice")
 
+# function to save user input
 def save_input(expense: Expense, all_expenses):
     with open(all_expenses, "a") as f:
         f.write(f"{expense.name}, {expense.price}, {expense.category}\n")
 
+# function to analyse expenses
 def analyse_expenses(all_expenses, budget):
     expenses = []
     with open(all_expenses, "r") as f:
@@ -93,11 +70,13 @@ def analyse_expenses(all_expenses, budget):
     print(green_text(f"Remaining: {format_inr(remaining_budget)}"))
     print("\n")
 
+# format figures to INR format
 locale.setlocale(locale.LC_MONETARY, 'en_IN')
 def format_inr(amount):
     formatted = locale.currency(amount, grouping=True)
     return formatted.replace("₹ ", "₹")
 
+# show colorful output in terminal
 def red_text(text):
     RED = "\033[91m"
     RESET = "\033[0m"
@@ -108,5 +87,36 @@ def green_text(text):
     RESET = "\033[0m"
     return f"{GREEN}{text}{RESET}"
 
+
+# main function
+def main():
+
+    #define a monthly budget
+    budget = 20000
+
+    # csv file to save expenses
+    all_expenses = "expense tracker/expenses.csv"
+
+    print("Welcome to your expense manager! please select operation to proceed.")
+    choice = int(input("1. Add expense\n2. Analyse Expenses\n->"))
+
+    # execute operation according to choice
+    match choice:
+        case 1:
+            # take expense data from user
+            expense = get_user_input()
+
+            # display added expense
+            print(f"Expense added-->\n{expense}")
+
+            # save input into a csv file
+            save_input(expense, all_expenses)
+        
+        case 2:
+            # read data and provide brief analysis
+            analyse_expenses(all_expenses, budget)
+
+
+# run application
 if __name__ == "__main__":
     main()
