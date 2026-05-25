@@ -1,5 +1,6 @@
 import locale
 from Expense import Expense
+from pathlib import Path
 
 # function to take user input
 def get_user_input():
@@ -96,7 +97,8 @@ def main():
     budget = 20000
 
     # csv file to save expenses
-    all_expenses = "expense tracker/expenses.csv"
+    BASE_DIR = Path(__file__).parent
+    all_expenses = BASE_DIR / "expenses.csv"
 
     print("\n")
     print("Welcome to your expense manager! please select operation to proceed.")
