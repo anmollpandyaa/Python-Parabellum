@@ -1,4 +1,7 @@
+import locale
 from Expense import Expense
+
+
 
 def main():
 
@@ -72,11 +75,15 @@ def analyse_expenses(all_expenses, budget):
         print(f"   •{cat}: ₹{price}")
     
     total_spent = sum([x.price for x in expenses])
-    print(red_text(f"Total spent: ₹{total_spent}"))
+    print(red_text(f"Total spent: {format_inr(total_spent)}"))
 
     remaining_budget = budget - total_spent
-    print(green_text(f"Remaining: ₹{remaining_budget}"))
+    print(green_text(f"Remaining: {format_inr(remaining_budget)}"))
 
+locale.setlocale(locale.LC_MONETARY, 'en_IN')
+def format_inr(amount):
+    formatted = locale.currency(amount, grouping=True)
+    return formatted.replace("₹ ", "₹")
 
 def red_text(text):
     RED = "\033[91m"
