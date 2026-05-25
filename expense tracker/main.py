@@ -122,7 +122,6 @@ def green_text(text):
     RESET = "\033[0m"
     return f"{GREEN}{text}{RESET}"
 
-
 # main function
 def main():
 
@@ -150,7 +149,6 @@ def main():
             # read data and provide brief analysis
             print("\n")
             analyse_expenses(all_expenses, budget)
-
 
 # run application
 if __name__ == "__main__":
