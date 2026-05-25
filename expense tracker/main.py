@@ -54,9 +54,20 @@ def analyse_expenses(all_expenses):
         for line in lines:
             name, price, category = line.strip().split(",")
             line_expense = Expense(name = name, price = float(price), category = category)
-            print(line_expense)
             expenses.append(line_expense)
-    print(expenses)
+    
+    amount_by_category = {}
+    for expense in expenses:
+        cat = expense.category
+
+        if cat in amount_by_category:
+            amount_by_category[cat] += expense.price
+        
+        else:
+            amount_by_category[cat] = expense.price
+    
+    for cat, price in amount_by_category.items():
+        print(f"   •{cat}: ₹{price}")
 
 if __name__ == "__main__":
     main()
