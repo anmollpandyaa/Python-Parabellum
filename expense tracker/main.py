@@ -3,6 +3,7 @@ from Expense import Expense
 
 # function to take user input
 def get_user_input():
+    print("\n")
     product_name = input("Expense Title: ")
     product_price = float(input("Expense Price: "))
 
@@ -97,6 +98,7 @@ def main():
     # csv file to save expenses
     all_expenses = "expense tracker/expenses.csv"
 
+    print("\n")
     print("Welcome to your expense manager! please select operation to proceed.")
     choice = int(input("1. Add expense\n2. Analyse Expenses\n->"))
 
@@ -107,6 +109,7 @@ def main():
             expense = get_user_input()
 
             # display added expense
+            print("\n")
             print(f"Expense added-->\n{expense}")
 
             # save input into a csv file
@@ -114,6 +117,7 @@ def main():
         
         case 2:
             # read data and provide brief analysis
+            print("\n")
             analyse_expenses(all_expenses, budget)
 
 
