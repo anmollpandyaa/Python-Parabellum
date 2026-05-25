@@ -2,6 +2,8 @@ from Expense import Expense
 
 def main():
 
+    budget = 20000
+
     all_expenses = "expense tracker/expenses.csv"
     # get user input    
     # expense = get_user_input()
@@ -11,7 +13,7 @@ def main():
     # save_input(expense, all_expenses)
 
     # read and provide summary
-    analyse_expenses(all_expenses)
+    analyse_expenses(all_expenses, budget)
 
 def get_user_input():
     product_name = input("Enter product name: ")
@@ -46,7 +48,7 @@ def save_input(expense: Expense, all_expenses):
     with open(all_expenses, "a") as f:
         f.write(f"{expense.name}, {expense.price}, {expense.category}\n")
 
-def analyse_expenses(all_expenses):
+def analyse_expenses(all_expenses, budget):
     expenses = []
     with open(all_expenses, "r") as f:
         lines = f.readlines()
@@ -68,6 +70,23 @@ def analyse_expenses(all_expenses):
     
     for cat, price in amount_by_category.items():
         print(f"   •{cat}: ₹{price}")
+    
+    total_spent = sum([x.price for x in expenses])
+    print(red_text(f"Total spent: ₹{total_spent}"))
+
+    remaining_budget = budget - total_spent
+    print(green_text(f"Remaining: ₹{remaining_budget}"))
+
+
+def red_text(text):
+    RED = "\033[91m"
+    RESET = "\033[0m"
+    return f"{RED}{text}{RESET}"
+
+def green_text(text):
+    GREEN = "\033[92m"
+    RESET = "\033[0m"
+    return f"{GREEN}{text}{RESET}"
 
 if __name__ == "__main__":
     main()
