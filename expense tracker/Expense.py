@@ -5,4 +5,4 @@ class Expense:
         self.category = category
     
     def __repr__(self):
-        return f"Product: {self.name}, Price: ₹{self.price}, Category: {self.category}"
+        return f"Title: {self.name}, Price: ₹{self.price}, Category: {self.category}"

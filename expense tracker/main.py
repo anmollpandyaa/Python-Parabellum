@@ -1,41 +1,50 @@
 import locale
 from Expense import Expense
 
-
-
 def main():
 
+    #define a monthly budget
     budget = 20000
 
+    # csv file to save expenses
     all_expenses = "expense tracker/expenses.csv"
-    # get user input    
-    # expense = get_user_input()
-    # print(expense)
 
-    # # save into file
-    # save_input(expense, all_expenses)
+    print("Welcome to your expense manager! please select operation to proceed.")
+    choice = int(input("1. Add expense\n2. Analyse Expenses\n->"))
 
-    # read and provide summary
-    analyse_expenses(all_expenses, budget)
+    match choice:
+        case 1:
+            # take expense data from user
+            expense = get_user_input()
+
+            # display added expense
+            print(f"Expense added-->\n{expense}")
+
+            # save input into a csv file
+            save_input(expense, all_expenses)
+        
+        case 2:
+            # read data and provide brief analysis
+            analyse_expenses(all_expenses, budget)
 
 def get_user_input():
-    product_name = input("Enter product name: ")
-    product_price = float(input("Enter product price: "))
+    product_name = input("Expense Title: ")
+    product_price = float(input("Expense Price: "))
 
     product_categories = [
-        "Utilities & Essentials",
-        "Grocery & Food",
-        "Transportation",
-        "Entertainment",
-        "Savings & Investments"
+        "Essentials",
+        "Food",
+        "Scooter",
+        "Shopping",
+        "Other"
     ]
 
     while True:
-        print("Choose category: ")
+        print("\n")
+        print("Select category: ")
         for i, cat in enumerate(product_categories):
             print(f"{i + 1}. {cat}")
         
-        category_range = f"[1 - {len(product_categories)}]"
         product_category = int((input("->"))) - 1
         break
 
@@ -71,14 +80,18 @@ def analyse_expenses(all_expenses, budget):
         else:
             amount_by_category[cat] = expense.price
     
+    print("Expenses by category-->")
     for cat, price in amount_by_category.items():
         print(f"   •{cat}: ₹{price}")
     
+    print("\n")
+
     total_spent = sum([x.price for x in expenses])
     print(red_text(f"Total spent: {format_inr(total_spent)}"))
 
     remaining_budget = budget - total_spent
     print(green_text(f"Remaining: {format_inr(remaining_budget)}"))
+    print("\n")
 
 locale.setlocale(locale.LC_MONETARY, 'en_IN')
 def format_inr(amount):
